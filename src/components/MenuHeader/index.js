@@ -1,12 +1,16 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllCategory } from "../../actions/category.action";
 import "./style.css";
+import { useSelector, useDispatch } from "react-redux";
+import { getAllCategory } from "../../actions";
+
+/**
+ * @author
+ * @function MenuHeader
+ **/
 
 const MenuHeader = (props) => {
-  const dispatch = useDispatch();
-
   const category = useSelector((state) => state.category);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAllCategory());
@@ -14,16 +18,17 @@ const MenuHeader = (props) => {
 
   const renderCategories = (categories) => {
     let myCategories = [];
-
     for (let category of categories) {
       myCategories.push(
         <li key={category.name}>
           {category.parentId ? (
-            <a href={`${category.slug}`}>{category.name}</a>
+            <a
+              href={`/${category.slug}?cid=${category._id}&type=${category.type}`}
+            >
+              {category.name}
+            </a>
           ) : (
-            <span>
-              <a href={`${category.name}`}>{category.name}</a>
-            </span>
+            <span>{category.name}</span>
           )}
           {category.children.length > 0 ? (
             <ul>{renderCategories(category.children)}</ul>
@@ -33,9 +38,8 @@ const MenuHeader = (props) => {
     }
     return myCategories;
   };
-
   return (
-    <div className="menuheader">
+    <div className="menuHeader">
       <ul>
         {category.categories.length > 0
           ? renderCategories(category.categories)
