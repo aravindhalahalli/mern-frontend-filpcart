@@ -9,12 +9,18 @@ import {
   MaterialButton,
   DropdownMenu,
 } from "../MaterialUI";
+import { useDispatch } from "react-redux";
+import { login } from "../../actions";
 
 const Header = (props) => {
   const [loginModal, setLoginModal] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
 
+  const userLogin = () => {
+    dispatch(login({ email, password }));
+  };
   return (
     <div className="header">
       <Modal visible={loginModal} onClose={() => setLoginModal(false)}>
@@ -25,30 +31,47 @@ const Header = (props) => {
               <p>Get access to your Orders, Wishlist and Recommendations</p>
             </div>
             <div className="rightspace">
-              <MaterialInput
-                type="text"
-                label="Enter Email/Enter Mobile Number"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
+              <div className="loginInputContainer">
+                <MaterialInput
+                  type="text"
+                  label="Enter Email/Enter Mobile Number"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
 
-              <MaterialInput
-                type="password"
-                label="Enter Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                rightElement={<a href="#">Forgot?</a>}
-              />
-              <MaterialButton
-                title="Login"
-                bgColor="#fb641b"
-                textColor="#ffffff"
-              />
+                <MaterialInput
+                  type="password"
+                  label="Enter Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  rightElement={<a href="#">Forgot ?</a>}
+                />
+                <MaterialButton
+                  title="Login"
+                  bgColor="#fb641b"
+                  textColor="#ffffff"
+                  style={{
+                    margin: "40px 0 20px 0",
+                  }}
+                  onClick={userLogin}
+                />
+                <p style={{ textAlign: "center" }}>OR</p>
+
+                <MaterialButton
+                  title="Request OTP"
+                  bgColor="#ffffff"
+                  textColor="#2874f0"
+                  style={{
+                    margin: "20px 0",
+                  }}
+                />
+              </div>
             </div>
           </div>
         </div>
       </Modal>
       <div className="subHeader">
+        {/* Logo */}
         <div className="logo">
           <a href="">
             <img src={flipkartLogo} className="logoimage" alt="" />
@@ -59,6 +82,9 @@ const Header = (props) => {
             <img src={goldenStar} className="goldenStar" alt="" />
           </a>
         </div>
+        {/* Logo ends */}
+
+        {/* Search Component */}
         <div
           style={{
             padding: "0 10px",
@@ -67,7 +93,7 @@ const Header = (props) => {
           <div className="searchInputContainer">
             <input
               className="searchInput"
-              placeholder={"search for products, brands and more"}
+              placeholder={"Search for products, brands and more"}
             />
             <div className="searchIconContainer">
               <IoIosSearch
@@ -78,6 +104,9 @@ const Header = (props) => {
             </div>
           </div>
         </div>
+        {/* Search Component Ends */}
+
+        {/* Right Side Menu */}
         <div className="rightMenu">
           <DropdownMenu
             menu={
@@ -122,6 +151,7 @@ const Header = (props) => {
             </a>
           </div>
         </div>
+        {/* Right side menu ends */}
       </div>
     </div>
   );

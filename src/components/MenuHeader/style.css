@@ -4,6 +4,7 @@
   background: #fff;
   border-bottom: 1px solid #cecece;
   box-shadow: 0 2px 2px -2px #333;
+  padding: 4rem 0 0;
 }
 .menuHeader ul{
   list-style: none;
