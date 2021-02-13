@@ -1,6 +1,7 @@
 import { authConstants } from "./constants";
 import axios from "../helpers/axios";
 
+//worked on auth
 export const login = (user) => {
   console.log(user);
 
